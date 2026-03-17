@@ -1,0 +1,28 @@
+name: Gradeboard
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    branches: [ main ]
+    paths:
+      - gradeboard/roster.json
+      - scripts/build_gradeboard.py
+      - .github/workflows/gradeboard.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build consolidated gradeboard
+        run: python3 scripts/build_gradeboard.py
+      - name: Commit gradeboard docs
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: update gradeboard'
+          file_pattern: 'docs/grades.json'

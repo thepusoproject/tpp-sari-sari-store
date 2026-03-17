@@ -36,3 +36,12 @@ To let grading and code review work smoothly:
 1. Go to your repo on GitHub → **Settings → Collaborators & teams**.
 2. Add `thepusoproject` as a collaborator with **Write** access.
 3. Accept the invite (GitHub will show a banner). Once accepted, your instructor can review PRs and push feedback branches if needed.
+
+## Gradeboard (GitHub Pages)
+The teacher repo ships with a simple dashboard under `docs/`. To use it:
+1. List all student repos in `gradeboard/roster.json` (handle, display name, repo URL).
+2. GitHub Actions workflow **Gradeboard** fetches each repo’s `grades/latest.json` and writes `docs/grades.json`.
+3. Enable GitHub Pages → **Settings → Pages → Deploy from branch → main /docs**.
+4. Share the Pages URL (`https://<org>.github.io/tpp-sari-sari-store/`) to show the live grade table.
+
+The workflow runs on every roster change, manual dispatch, and at midnight UTC, so the dashboard always reflects the latest merges.

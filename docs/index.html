@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TPP Py4E Gradeboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; margin: 2rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+    th { background: #f4f4f4; }
+    .error { color: #b00020; }
+  </style>
+</head>
+<body>
+  <h1>TPP Py4E Gradeboard</h1>
+  <p id="updated">Loading…</p>
+  <table id="grade-table" hidden>
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Module</th>
+        <th>Score</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <p id="error" class="error"></p>
+  <script>
+    fetch('grades.json', {cache: 'no-store'})
+      .then((resp) => resp.json())
+      .then((data) => {
+        const updated = document.getElementById('updated');
+        updated.textContent = `Last updated: ${new Date(data.generated_at).toLocaleString()}`;
+        const tbody = document.querySelector('#grade-table tbody');
+        data.students.forEach((student) => {
+          const tr = document.createElement('tr');
+          const nameCell = document.createElement('td');
+          nameCell.textContent = student.displayName || student.handle;
+          tr.appendChild(nameCell);
+          const moduleCell = document.createElement('td');
+          moduleCell.textContent = student.status === 'ok'
+            ? `${student.module} — ${student.title}`
+            : '—';
+          tr.appendChild(moduleCell);
+          const scoreCell = document.createElement('td');
+          scoreCell.textContent = student.status === 'ok'
+            ? `${student.score}% (${student.passed}/${student.total})`
+            : 'Error';
+          tr.appendChild(scoreCell);
+          const updatedCell = document.createElement('td');
+          updatedCell.textContent = student.status === 'ok'
+            ? new Date(student.updated_at).toLocaleString()
+            : (student.error || '');
+          tr.appendChild(updatedCell);
+          tbody.appendChild(tr);
+        });
+        document.getElementById('grade-table').hidden = false;
+      })
+      .catch((err) => {
+        document.getElementById('error').textContent = `Failed to load gradeboard: ${err}`;
+      });
+  </script>
+</body>
+</html>
