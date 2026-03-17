@@ -8,6 +8,19 @@ This is the evolving case study project for the Taglish Py4E track.
 ## Modules
 Implement requirements module-by-module. Your instructor will grade via Pull Requests.
 
+## Student quick start
+1. Clone your repo and create a virtualenv:
+   ```bash
+   git clone <your-repo-url>
+   cd <your-repo-folder>
+   python -m venv .venv && source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
+2. Run the starter app: `python main.py`
+3. Run the tests before every PR: `pytest`
+4. Add the template as `upstream` (see section below) so you can pull updates anytime.
+5. Invite `thepusoproject` as a collaborator so grading + reviews work smoothly.
+
 ## Automated grading
 Every push/merge to `main` runs the **Module Grade** GitHub Action:
 - Executes the module-specific pytest suite in `tests/`
@@ -38,7 +51,12 @@ To let grading and code review work smoothly:
 3. Accept the invite (GitHub will show a banner). Once accepted, your instructor can review PRs and push feedback branches if needed.
 
 ## Gradeboard (GitHub Pages)
-The teacher repo ships with a simple dashboard under `docs/`. To use it:
+The teacher repo ships with a simple dashboard under `docs/`. Features:
+- Search/filter by student name or handle (client-side search box).
+- Student names auto-pull from GitHub profiles (unless you override `displayName`).
+- Shows latest module, score, grade timestamp, and last push time.
+
+How to enable it:
 1. List all student repos in `gradeboard/roster.json` (handle, optional display name, repo URL). If `displayName` is omitted, the GitHub profile name is pulled automatically.
 2. GitHub Actions workflow **Gradeboard** fetches each repo’s `grades/latest.json` and writes `docs/grades.json`.
 3. Enable GitHub Pages → **Settings → Pages → Deploy from branch → main /docs**.

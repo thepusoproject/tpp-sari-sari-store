@@ -51,23 +51,47 @@ def fetch_profile_name(handle: str | None) -> str | None:
         return handle
 
 
+def fetch_repo_meta(repo: str) -> dict:
+    url = f"https://api.github.com/repos/{repo}"
+    request = urllib.request.Request(url)
+    if GITHUB_TOKEN:
+        request.add_header("Authorization", f"Bearer {GITHUB_TOKEN}")
+        request.add_header("Accept", "application/vnd.github+json")
+    try:
+        with urllib.request.urlopen(request, timeout=10) as resp:
+            return json.load(resp)
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def sanitize_module_number(module_value: str | None) -> int | None:
+    if not module_value:
+        return None
+    digits = "".join(ch for ch in module_value if ch.isdigit())
+    return int(digits) if digits else None
+
+
 def build_gradeboard() -> dict:
     roster = load_roster()
     rows = []
     for entry in roster:
         grade_data, status = fetch_grade(entry["repo"])
+        repo_meta = fetch_repo_meta(entry["repo"])
         display_name = entry.get("displayName") or fetch_profile_name(entry.get("handle"))
         handle = entry.get("handle")
+        module_value = grade_data.get("module") if grade_data else None
         row = {
             "handle": handle,
             "displayName": display_name or handle,
             "profileUrl": f"https://github.com/{handle}" if handle else None,
             "repo": entry["repo"],
             "status": status,
+            "lastPush": repo_meta.get("pushed_at"),
+            "moduleNumber": sanitize_module_number(module_value),
         }
         if status == "ok" and grade_data:
             row.update(
-                module=grade_data.get("module"),
+                module=module_value,
                 title=grade_data.get("title"),
                 passed=grade_data.get("passed"),
                 total=grade_data.get("total"),

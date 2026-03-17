@@ -25,6 +25,7 @@
         <th>Module</th>
         <th>Score</th>
         <th>Updated</th>
+        <th>Last Push</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -72,6 +73,11 @@
             ? new Date(student.updated_at).toLocaleString()
             : (student.error || '');
           tr.appendChild(updatedCell);
+          const pushCell = document.createElement('td');
+          pushCell.textContent = student.lastPush
+            ? new Date(student.lastPush).toLocaleString()
+            : '—';
+          tr.appendChild(pushCell);
           tbody.appendChild(tr);
         });
       document.getElementById('grade-table').hidden = students.length === 0;
