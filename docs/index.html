@@ -15,6 +15,9 @@
 <body>
   <h1>TPP Py4E Gradeboard</h1>
   <p id="updated">Loading…</p>
+  <label>
+    Search: <input id="search" type="search" placeholder="Name or handle" />
+  </label>
   <table id="grade-table" hidden>
     <thead>
       <tr>
@@ -28,16 +31,31 @@
   </table>
   <p id="error" class="error"></p>
   <script>
-    fetch('grades.json', {cache: 'no-store'})
-      .then((resp) => resp.json())
-      .then((data) => {
-        const updated = document.getElementById('updated');
-        updated.textContent = `Last updated: ${new Date(data.generated_at).toLocaleString()}`;
-        const tbody = document.querySelector('#grade-table tbody');
-        data.students.forEach((student) => {
+    const tbody = document.querySelector('#grade-table tbody');
+    let students = [];
+
+    const render = (filter = '') => {
+      tbody.innerHTML = '';
+      const term = filter.trim().toLowerCase();
+      students
+        .filter((student) =>
+          !term ||
+          student.displayName.toLowerCase().includes(term) ||
+          (student.handle && student.handle.toLowerCase().includes(term))
+        )
+        .forEach((student) => {
           const tr = document.createElement('tr');
           const nameCell = document.createElement('td');
-          nameCell.textContent = student.displayName || student.handle;
+          if (student.profileUrl) {
+            const link = document.createElement('a');
+            link.href = student.profileUrl;
+            link.textContent = student.displayName || student.handle;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            nameCell.appendChild(link);
+          } else {
+            nameCell.textContent = student.displayName || student.handle;
+          }
           tr.appendChild(nameCell);
           const moduleCell = document.createElement('td');
           moduleCell.textContent = student.status === 'ok'
@@ -56,7 +74,20 @@
           tr.appendChild(updatedCell);
           tbody.appendChild(tr);
         });
-        document.getElementById('grade-table').hidden = false;
+      document.getElementById('grade-table').hidden = students.length === 0;
+    };
+
+    document.getElementById('search').addEventListener('input', (event) => {
+      render(event.target.value);
+    });
+
+    fetch('grades.json', {cache: 'no-store'})
+      .then((resp) => resp.json())
+      .then((data) => {
+        const updated = document.getElementById('updated');
+        updated.textContent = `Last updated: ${new Date(data.generated_at).toLocaleString()}`;
+        students = data.students || [];
+        render('');
       })
       .catch((err) => {
         document.getElementById('error').textContent = `Failed to load gradeboard: ${err}`;

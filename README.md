@@ -39,7 +39,7 @@ To let grading and code review work smoothly:
 
 ## Gradeboard (GitHub Pages)
 The teacher repo ships with a simple dashboard under `docs/`. To use it:
-1. List all student repos in `gradeboard/roster.json` (handle, display name, repo URL).
+1. List all student repos in `gradeboard/roster.json` (handle, optional display name, repo URL). If `displayName` is omitted, the GitHub profile name is pulled automatically.
 2. GitHub Actions workflow **Gradeboard** fetches each repo’s `grades/latest.json` and writes `docs/grades.json`.
 3. Enable GitHub Pages → **Settings → Pages → Deploy from branch → main /docs**.
 4. Share the Pages URL (`https://<org>.github.io/tpp-sari-sari-store/`) to show the live grade table.

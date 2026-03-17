@@ -1,9 +1,10 @@
 {
-  "generated_at": "2026-03-17T19:44:55.822814+00:00",
+  "generated_at": "2026-03-17T19:52:50.940520+00:00",
   "students": [
     {
       "handle": "engramar",
       "displayName": "Engramar Bollas",
+      "profileUrl": "https://github.com/engramar",
       "repo": "engramar/tpp-sari-sari-store-engramar",
       "status": "ok",
       "module": "M01",

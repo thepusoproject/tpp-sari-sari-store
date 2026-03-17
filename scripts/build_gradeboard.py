@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 import urllib.error
 import urllib.request
@@ -12,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ROSTER_PATH = ROOT / "gradeboard" / "roster.json"
 OUTPUT_JSON = ROOT / "docs" / "grades.json"
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 
 def load_roster() -> list[dict]:
@@ -33,14 +35,33 @@ def fetch_grade(repo: str) -> tuple[dict | None, str]:
         return {"error": str(exc)}, "error"
 
 
+def fetch_profile_name(handle: str | None) -> str | None:
+    if not handle:
+        return None
+    url = f"https://api.github.com/users/{handle}"
+    request = urllib.request.Request(url)
+    if GITHUB_TOKEN:
+        request.add_header("Authorization", f"Bearer {GITHUB_TOKEN}")
+        request.add_header("Accept", "application/vnd.github+json")
+    try:
+        with urllib.request.urlopen(request, timeout=10) as resp:
+            data = json.load(resp)
+            return data.get("name") or handle
+    except Exception:  # noqa: BLE001
+        return handle
+
+
 def build_gradeboard() -> dict:
     roster = load_roster()
     rows = []
     for entry in roster:
         grade_data, status = fetch_grade(entry["repo"])
+        display_name = entry.get("displayName") or fetch_profile_name(entry.get("handle"))
+        handle = entry.get("handle")
         row = {
-            "handle": entry.get("handle"),
-            "displayName": entry.get("displayName", entry.get("handle")),
+            "handle": handle,
+            "displayName": display_name or handle,
+            "profileUrl": f"https://github.com/{handle}" if handle else None,
             "repo": entry["repo"],
             "status": status,
         }
