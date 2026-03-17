@@ -1,0 +1,52 @@
+name: Module Grade
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run module tests
+        run: pytest --maxfail=1 --disable-warnings --json-report --json-report-file=grade_report.json
+
+      - name: Compute grade artifacts
+        run: python scripts/compute_grade.py grade_report.json --json-output grades/latest.json --markdown-output GRADEBOOK.md
+
+      - name: Upload grading artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: module-grade
+          path: |
+            grade_report.json
+            grades/latest.json
+            GRADEBOOK.md
+
+      - name: Commit gradebook on main
+        if: github.event_name == 'push'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: update gradebook'
+          file_pattern: |
+            GRADEBOOK.md
+            grades/latest.json
