@@ -1,0 +1,28 @@
+name: Roster signup
+description: Students — submit your repo info so the Gradeboard can track your progress.
+title: "Roster signup: <github-handle>"
+labels: ["roster"]
+body:
+  - type: input
+    id: handle
+    attributes:
+      label: GitHub handle
+      description: Your GitHub username
+      placeholder: newstudent
+    validations:
+      required: true
+  - type: input
+    id: repo
+    attributes:
+      label: Repo (owner/name)
+      description: Format: owner/repo (e.g., newstudent/tpp-sari-sari-store-newstudent)
+      placeholder: owner/repo
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Anything else we should know (e.g., timezone, blockers)
+    validations:
+      required: false

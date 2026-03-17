@@ -5,7 +5,7 @@ Quick reference for onboarding students, reviewing modules, and keeping automati
 ## 1. Onboard a new student
 1. Verify their repo name: `tpp-sari-sari-store-<name>` (public).
 2. Check they added `thepusoproject` as collaborator (GitHub shows a notification—accept it).
-3. Add them to `gradeboard/roster.json` with:
+3. Add them to `gradeboard/roster.json` (copy-paste from their “Roster signup” issue) with:
    ```json
    { "handle": "github-username", "repo": "owner/repo" }
    ```

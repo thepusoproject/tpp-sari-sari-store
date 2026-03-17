@@ -57,9 +57,10 @@ The teacher repo ships with a simple dashboard under `docs/`. Features:
 - Shows latest module, score, grade timestamp, and last push time.
 
 How to enable it:
-1. List all student repos in `gradeboard/roster.json` (handle, optional display name, repo URL). If `displayName` is omitted, the GitHub profile name is pulled automatically.
-2. GitHub Actions workflow **Gradeboard** fetches each repo’s `grades/latest.json` and writes `docs/grades.json`.
-3. Enable GitHub Pages → **Settings → Pages → Deploy from branch → main /docs**.
-4. Share the Pages URL (`https://<org>.github.io/tpp-sari-sari-store/`) to show the live grade table.
+1. Ask each student to open the **Roster signup** issue template in this repo so you get their handle/repo details.
+2. Copy their info into `gradeboard/roster.json` (handle, optional display name, repo URL). If `displayName` is omitted, the GitHub profile name is pulled automatically.
+3. GitHub Actions workflow **Gradeboard** fetches each repo’s `grades/latest.json` and writes `docs/grades.json`.
+4. Enable GitHub Pages → **Settings → Pages → Deploy from branch → main /docs**.
+5. Share the Pages URL (`https://<org>.github.io/tpp-sari-sari-store/`) to show the live grade table.
 
 The workflow runs on every roster change, manual dispatch, and at midnight UTC, so the dashboard always reflects the latest merges.
