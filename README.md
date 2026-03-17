@@ -30,3 +30,9 @@ When we publish fixes or new modules, pull them into your student repo without r
 3. Resolve conflicts if Git shows them (usually only in files you’ve edited).
 
 This keeps your local copy up to date with new modules, tests, or grading tweaks while preserving your own commits.
+
+## Give your instructor access
+To let grading and code review work smoothly:
+1. Go to your repo on GitHub → **Settings → Collaborators & teams**.
+2. Add `thepusoproject` as a collaborator with **Write** access.
+3. Accept the invite (GitHub will show a banner). Once accepted, your instructor can review PRs and push feedback branches if needed.
