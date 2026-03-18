@@ -379,8 +379,7 @@
           lines.push(`- Notes: ${notes}`);
         }
         const title = encodeURIComponent(`Roster signup: ${handle}`);
-        const body = encodeURIComponent(lines.join('
-'));
+        const body = encodeURIComponent(lines.join('\\n'));
         const url = `https://github.com/thepusoproject/tpp-sari-sari-store/issues/new?title=${title}&body=${body}`;
         window.open(url, '_blank');
       };
