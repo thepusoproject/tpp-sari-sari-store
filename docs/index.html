@@ -85,6 +85,17 @@
     section { margin: 0 auto 3.5rem; max-width: 1000px; }
     section h2 { font-size: 2rem; margin-bottom: 0.75rem; }
     .section-lede { color: var(--muted); margin-bottom: 1.5rem; }
+    .enroll-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: start; }
+    .form-field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+    .form-field input, .form-field textarea {
+      padding: 0.75rem 0.9rem;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e8f0;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    .btn-full { width: 100%; justify-content: center; }
+    .form-status { margin-top: 0.75rem; color: var(--muted); }
     .pillars {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -148,6 +159,11 @@
       nav a { color: #f8fafc; }
       .section-lede, .hero p, footer { color: #cbd5f5; }
       #gradeboard input[type="search"] {
+        background: #0f172a;
+        color: #f8fafc;
+        border-color: #334155;
+      }
+      .form-field input, .form-field textarea {
         background: #0f172a;
         color: #f8fafc;
         border-color: #334155;
@@ -228,19 +244,38 @@
 
     <section id="enroll">
       <h2>Enroll in the roster</h2>
-      <p class="section-lede">One issue and you’re on the radar. After that, the Gradeboard tracks you automatically.</p>
-      <article class="card">
-        <ol class="steps">
-          <li>Create your repo from the template (public) and invite <code>thepusoproject</code> as collaborator.</li>
-          <li>
-            Open the
-            <a href="https://github.com/thepusoproject/tpp-sari-sari-store/issues/new?template=roster-signup.yml" target="_blank" rel="noopener noreferrer">roster signup issue</a>
-            and submit your GitHub handle plus <code>owner/repo</code>.
-          </li>
-          <li>Wait for the roster update. The Gradeboard refreshes automatically on the next scheduled run.</li>
-        </ol>
-        <p>Need help? Ping us before filing the issue so we can keep the roster clean.</p>
-      </article>
+      <p class="section-lede">Fill out the mini form—we’ll open a pre-filled GitHub issue so you just review and submit.</p>
+      <div class="enroll-grid">
+        <article class="card">
+          <h3>How it works</h3>
+          <ol class="steps">
+            <li>Create your repo from the template (public) and invite <code>thepusoproject</code> as collaborator.</li>
+            <li>Use the form to generate a roster issue. We pre-fill the title, label, and body for you.</li>
+            <li>Review the GitHub issue that opens in a new tab and click <strong>Submit new issue</strong>.</li>
+            <li>Give us a beat—the Gradeboard refreshes soon after we merge you into the roster.</li>
+          </ol>
+          <p>Need help? Ping us before filing so we can keep the roster tidy.</p>
+        </article>
+        <article class="card">
+          <h3>Quick enrollment form</h3>
+          <form id="roster-form" autocomplete="on">
+            <div class="form-field">
+              <label for="handle">GitHub handle</label>
+              <input type="text" id="handle" name="handle" placeholder="newstudent" required />
+            </div>
+            <div class="form-field">
+              <label for="repo">Repo (owner/name)</label>
+              <input type="text" id="repo" name="repo" placeholder="newstudent/tpp-sari-sari-store-newstudent" required />
+            </div>
+            <div class="form-field">
+              <label for="notes">Notes (optional)</label>
+              <textarea id="notes" name="notes" rows="3" placeholder="Timezone, blockers, anything we should know"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Generate roster issue</button>
+            <p id="form-status" class="form-status" aria-live="polite"></p>
+          </form>
+        </article>
+      </div>
     </section>
 
     <section id="gradeboard">
@@ -357,6 +392,38 @@
       .catch((err) => {
         document.getElementById('error').textContent = `Failed to load gradeboard: ${err}`;
       });
+
+
+    const rosterForm = document.getElementById('roster-form');
+    if (rosterForm) {
+      const statusEl = document.getElementById('form-status');
+      rosterForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(rosterForm);
+        const handle = (formData.get('handle') || '').trim();
+        const repo = (formData.get('repo') || '').trim();
+        const notes = (formData.get('notes') || '').trim();
+        if (!handle || !repo) {
+          statusEl.textContent = 'Please fill out both your GitHub handle and repo.';
+          return;
+        }
+        const lines = [
+          '### Roster signup',
+          `- GitHub handle: ${handle}`,
+          `- Repo: ${repo}`,
+        ];
+        if (notes) {
+          lines.push(`- Notes: ${notes}`);
+        }
+        const title = encodeURIComponent(`Roster signup: ${handle}`);
+        const body = encodeURIComponent(lines.join('\n'));
+        const labels = encodeURIComponent('roster');
+        const url = `https://github.com/thepusoproject/tpp-sari-sari-store/issues/new?title=${title}&body=${body}&labels=${labels}`;
+        window.open(url, '_blank');
+        statusEl.textContent = 'Opened GitHub in a new tab. Review and submit the issue to finish enrollment.';
+        rosterForm.reset();
+      });
+    }
   </script>
 </body>
 </html>
