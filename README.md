@@ -1,6 +1,6 @@
 # TPP Sari-Sari Store (CLI) — Student Project
 
-This is the evolving case study project for the Taglish Py4E track.
+This is the evolving case study project for the Programming para sa Lahat track.
 
 ## How to run
 - `python main.py` (or `python3 main.py`)
