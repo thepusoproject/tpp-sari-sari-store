@@ -1,0 +1,10 @@
+{
+  "module": "Module 02 — Conditionals at Branching",
+  "questions": [
+    "Paano mo pinipili kung `if/elif/else` lang ang kailangan o dapat nang mag-switch sa lookup dict?",
+    "Magbigay ng promo rule na dapat naka-guard clause para hindi ma-apply sa maling customer.",
+    "Ano ang pinaka-mahirap i-test na branch sa module na ito at bakit?",
+    "Paano mo ine-ensure na lahat ng combination ng membership level + total amount ay covered ng conditionals mo?",
+    "Kung biglang may bagong business rule (e.g., senior discount na exclusive), saan mo ilalagay sa code para hindi masira ang existing logic?"
+  ]
+}

@@ -1,0 +1,27 @@
+name: Oral Defense Reminder
+
+on:
+  pull_request_target:
+    types: [labeled]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  ping:
+    if: github.event.label.name == 'oral-check'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post oral-check reminder
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const body = `Hi @${pr.user.login}!\n\nMay label na **oral-check** ang PR na ito kaya kailangan natin ng mabilis na 5-min sync. Pakibasa at sundin ang alinman sa options na ito:\n\n- Mag-reply dito ng preferred oras + platform (Discord, Telegram, GMeet).\n- O kaya mag-DM kay @thepusoproject para makapag-set ng slot.\n\nPagkatapos ng maikling viva / walkthrough, aalisin namin ang label. Salamat!`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body,
+            });

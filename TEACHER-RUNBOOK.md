@@ -36,7 +36,13 @@ Quick reference for onboarding students, reviewing modules, and keeping automati
 | Collaborator invite not received | Have the student resend from **Settings → Collaborators**; accept from your notifications bell. |
 | `git push` blocked in Hostinger container | Run `git config --global --add safe.directory <path>` for the repo or ensure `chown -R node:node <path>`. |
 
-## 6. Future enhancements (parking lot)
+## 6. Oral defense spot-checks
+- Kapag may kahina-hinalang PR (sudden jump in quality, kopya sa ibang repo, etc.), lagyan ng label na `oral-check`.
+- A bot comment will ask the student to book a 5-min sync. You can drop your Calendly/Discord link in the comment manually or reply with a schedule.
+- After the call, remove the label (or close the PR) so we know it’s done.
+
+## 7. Future enhancements (parking lot)
+## 7. Future enhancements (parking lot)
 - Add notifications to Slack/Discord from the stale PR workflow.
 - Parse multiple modules per student once we store a history file per repo.
 - Auto-file GitHub issues when a workflow fails repeatedly.

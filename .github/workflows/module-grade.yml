@@ -30,6 +30,10 @@ jobs:
       - name: Run module tests
         run: pytest --maxfail=1 --disable-warnings --json-report --json-report-file=grade_report.json
 
+      - name: Verify concept reflections
+        if: github.repository_owner != 'thepusoproject'
+        run: python scripts/check_concepts.py
+
       - name: Compute grade artifacts
         run: python scripts/compute_grade.py grade_report.json --json-output grades/latest.json --markdown-output GRADEBOOK.md
 

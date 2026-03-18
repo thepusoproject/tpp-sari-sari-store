@@ -21,6 +21,12 @@ Implement requirements module-by-module. Your instructor will grade via Pull Req
 4. Add the template as `upstream` (see section below) so you can pull updates anytime.
 5. Invite `thepusoproject` as a collaborator so grading + reviews work smoothly.
 
+## Concept checks + walkthrough (bagong requirement)
+- Bawat module folder (`modules/module_XX/CONCEPT.md`) may Taglish prompts. Palitan ang `{{ISULAT_DITO}}` placeholders gamit ang sariling paliwanag (≥ 2 sentences bawat tanong).
+- Mag-record ng 2–3 minutong audio o video gamit ang phone (pwede rin audio lang). I-upload sa repo sa loob ng `recordings/` folder (hal. `recordings/module-01-<handle>.m4a`).
+- Tuwing magbubukas ka ng PR, isang bot ang magpo-post ng 2 random na tanong mula sa module na iyon. Sagutin ang thread bago mag-request ng review.
+- Lahat ito ay kasama sa iisang PR kasama ng code changes mo, kaya isang submission lang per module.
+
 ## Automated grading
 Every push/merge to `main` runs the **Module Grade** GitHub Action:
 - Executes the module-specific pytest suite in `tests/`

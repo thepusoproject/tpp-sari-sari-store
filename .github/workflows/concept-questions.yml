@@ -1,0 +1,77 @@
+name: Concept Question Bot
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  ask:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ask random concept questions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const pr = context.payload.pull_request;
+            const title = pr.title || '';
+            const match = title.match(/Module\s*(\d{1,2})/i);
+            const marker = '<!-- concept-check -->';
+            if (!match) {
+              core.info('No module number detected in title. Skipping concept questions.');
+              return;
+            }
+            const moduleNum = match[1].padStart(2, '0');
+            const filePath = path.join('.github', 'concept_questions', `module_${moduleNum}.json`);
+            if (!fs.existsSync(filePath)) {
+              core.info(`No question bank for module ${moduleNum}`);
+              return;
+            }
+            const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            const questions = data.questions || [];
+            if (questions.length === 0) {
+              core.info(`Question list empty for module ${moduleNum}`);
+              return;
+            }
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              per_page: 100,
+            });
+            if (comments.some((comment) => comment.body && comment.body.includes(marker))) {
+              core.info('Concept question comment already exists. Skipping.');
+              return;
+            }
+            const picks = [];
+            const used = new Set();
+            const desired = Math.min(2, questions.length);
+            while (picks.length < desired) {
+              const idx = Math.floor(Math.random() * questions.length);
+              if (used.has(idx)) continue;
+              used.add(idx);
+              picks.push(questions[idx]);
+            }
+            const bodyLines = [
+              marker,
+              `Hi @${pr.user.login}! Sagutin mo muna ang dalawang tanong na ito bago mag-request ng review:`,
+              '',
+            ];
+            picks.forEach((q, index) => {
+              bodyLines.push(`${index + 1}. ${q}`);
+            });
+            bodyLines.push('', 'Reply in this thread (Taglish ok). Salamat!');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: bodyLines.join('\n')
+            });

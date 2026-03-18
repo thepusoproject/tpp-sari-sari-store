@@ -1,0 +1,10 @@
+{
+  "module": "Module 01 — Input/Output at Variables",
+  "questions": [
+    "Ano ang epekto kapag hinayaan mong string pa rin ang presyo at quantity bago mag-multiply?",
+    "Paano ka nagde-decide kung kailan gagamit ng f-string vs concatenation sa CLI output?",
+    "Magbigay ng halimbawa kung saan dapat i-trim o i-normalize ang user input bago i-save.",
+    "Bakit mas okay gumamit ng descriptive variable names kaysa `a`, `b`, `c` sa resibo module?",
+    "Kung may rounding rule ang tindahan (e.g., nearest 0.25), paano mo ipapasok iyon sa code nang hindi nagiging spaghetti?"
+  ]
+}
