@@ -1,0 +1,6 @@
+name = "tpp-roster-worker"
+main = "src/index.js"
+compatibility_date = "2024-03-18"
+
+[vars]
+ALLOWED_ORIGIN = "https://thepusoproject.github.io"

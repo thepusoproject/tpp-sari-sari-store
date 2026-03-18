@@ -236,20 +236,20 @@
 
     <section id="enroll">
       <h2 class="serif">Enroll sa roster</h2>
-      <p class="section-lede">Dalawang field lang. We’ll open a pre-filled GitHub issue—i-review mo na lang bago i-submit.</p>
+      <p class="section-lede">Dalawang field lang. System na ang bahala gumawa ng GitHub roster issue (may fallback kung kailangan).</p>
       <div class="enroll-grid">
         <article class="card">
           <h3>Paano gumagana</h3>
           <ol class="steps">
             <li>I-fill out ang Quick enrollment form sa kanan (GitHub handle + repo). Kung wala ka pang repo, gamitin ang template muna tapos i-invite ang <code>thepusoproject</code>.</li>
-            <li>Pag-submit mo, bubukas ang GitHub roster issue sa bagong tab (auto title + label + body).</li>
-            <li>I-review ang laman tapos i-click ang <strong>Submit new issue</strong>.</li>
+            <li>Pag-submit mo, auto naming binubuo at ipinapasa ang GitHub roster issue sa background (may fallback na GitHub tab kung hindi pa naka-configure ang automation).</li>
+            <li>Makakakuha ka ng confirmation at link kung gusto mong silipin ang issue sa GitHub.</li>
             <li>Hintayin ang roster merge—lalabas ka sa Gradeboard pagkatapos ng sync.</li>
           </ol>
         </article>
         <article class="card">
           <h3>Quick enrollment form</h3>
-          <form id="roster-form" autocomplete="on">
+          <form id="roster-form" autocomplete="on" data-worker-endpoint="https://tpp-roster-worker.thepusoproject.workers.dev">
             <div class="form-field">
               <label for="handle">GitHub handle</label>
               <input type="text" id="handle" name="handle" placeholder="newstudent" required />
@@ -385,6 +385,25 @@
     const rosterForm = document.getElementById('roster-form');
     if (rosterForm) {
       const statusEl = document.getElementById('form-status');
+      const submitBtn = rosterForm.querySelector('button[type="submit"]');
+      const workerEndpoint = (rosterForm.dataset.workerEndpoint || '').trim();
+
+      const openGithubFallback = ({ handle, repo, notes }) => {
+        const lines = [
+          '### Roster signup',
+          `- GitHub handle: ${handle}`,
+          `- Repo: ${repo}`,
+        ];
+        if (notes) {
+          lines.push(`- Notes: ${notes}`);
+        }
+        const title = encodeURIComponent(`Roster signup: ${handle}`);
+        const body = encodeURIComponent(lines.join('
+'));
+        const url = `https://github.com/thepusoproject/tpp-sari-sari-store/issues/new?title=${title}&body=${body}`;
+        window.open(url, '_blank');
+      };
+
       rosterForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const formData = new FormData(rosterForm);
@@ -395,23 +414,46 @@
           statusEl.textContent = 'Pakicomplete ang handle at repo.';
           return;
         }
-        const lines = [
-          '### Roster signup',
-          `- GitHub handle: ${handle}`,
-          `- Repo: ${repo}`,
-        ];
-        if (notes) {
-          lines.push(`- Notes: ${notes}`);
+
+        const payload = { handle, repo, notes };
+
+        if (workerEndpoint) {
+          statusEl.textContent = 'Sinusumite ang roster issue…';
+          if (submitBtn) {
+            submitBtn.disabled = true;
+          }
+          fetch(workerEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          })
+            .then(async (response) => {
+              const data = await response.json().catch(() => ({}));
+              if (!response.ok || data.error) {
+                throw new Error(data.error || 'Submission failed');
+              }
+              const issueUrl = data.issue_url || `https://github.com/thepusoproject/tpp-sari-sari-store/issues`;
+              statusEl.innerHTML = `✅ Na-log na ang roster issue. <a href="${issueUrl}" target="_blank" rel="noopener noreferrer">Buksan sa GitHub</a>`;
+              rosterForm.reset();
+            })
+            .catch((err) => {
+              statusEl.textContent = `Nagka-issue sa automation (${err.message}). Binuksan namin ang GitHub fallback.`;
+              openGithubFallback(payload);
+            })
+            .finally(() => {
+              if (submitBtn) {
+                submitBtn.disabled = false;
+              }
+            });
+          return;
         }
-        const title = encodeURIComponent(`Roster signup: ${handle}`);
-        const body = encodeURIComponent(lines.join('\n'));
-        const labels = encodeURIComponent('roster');
-        const url = `https://github.com/thepusoproject/tpp-sari-sari-store/issues/new?title=${title}&body=${body}&labels=${labels}`;
-        window.open(url, '_blank');
+
+        openGithubFallback(payload);
         statusEl.textContent = 'Binuksan namin ang GitHub sa bagong tab. I-review at i-submit ang issue para makapasok sa roster.';
         rosterForm.reset();
       });
     }
+
   </script>
 </body>
 </html>
