@@ -1,10 +1,25 @@
 {
-  "generated_at": "2026-03-17T20:54:01.048668+00:00",
+  "generated_at": "2026-03-18T03:43:53.609396+00:00",
   "students": [
     {
       "handle": "engramar",
       "displayName": "Engramar Bollas",
       "profileUrl": "https://github.com/engramar",
+      "repo": "engramar/tpp-sari-sari-store-engramar",
+      "status": "ok",
+      "lastPush": "2026-03-17T18:57:09Z",
+      "moduleNumber": 1,
+      "module": "M01",
+      "title": "Sukli Calculator",
+      "passed": 2,
+      "total": 2,
+      "score": 100.0,
+      "updated_at": "2026-03-17T18:57:07.287953+00:00"
+    },
+    {
+      "handle": "engramar2",
+      "displayName": "Engramar 2",
+      "profileUrl": "https://github.com/engramar2",
       "repo": "engramar/tpp-sari-sari-store-engramar",
       "status": "ok",
       "lastPush": "2026-03-17T18:57:09Z",

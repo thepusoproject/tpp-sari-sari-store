@@ -3,5 +3,10 @@
     "handle": "engramar",
     "displayName": "Engramar Bollas",
     "repo": "engramar/tpp-sari-sari-store-engramar"
+  },
+  {
+    "handle": "engramar2",
+    "repo": "engramar/tpp-sari-sari-store-engramar",
+    "displayName": "Engramar 2"
   }
 ]
