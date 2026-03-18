@@ -24,6 +24,8 @@
     .flowchart li::before { content: '→'; position: absolute; left: 0; color: #f97316; }
     .tech-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
     .tech-stack span { display: block; border: 1px solid #e5e7eb; border-radius: 999px; padding: 0.6rem 1rem; text-align: center; background: #fff; }
+    .svg-wrapper { margin-top: 1.5rem; background: #fff; border: 1px solid #fcdcc5; border-radius: 1rem; padding: 1rem; box-shadow: inset 0 0 0 1px #fee7d4; }
+    svg text { font-family: 'Inter', sans-serif; }
   </style>
 </head>
 <body>
@@ -62,6 +64,42 @@
         <h3>GitHub Pages</h3>
         <p>Hosts the public Gradeboard, architecture doc, and proposal roadmap so stakeholders see progress.</p>
       </div>
+    </div>
+
+    <h2>Visual flow (diagram)</h2>
+    <div class="svg-wrapper">
+      <svg viewBox="0 0 900 220" role="img" aria-label="System flow diagram">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8" />
+          </marker>
+        </defs>
+        <g fill="#fff" stroke="#f97316" stroke-width="2">
+          <rect x="30" y="40" width="150" height="80" rx="16" />
+          <rect x="220" y="40" width="170" height="80" rx="16" />
+          <rect x="420" y="40" width="170" height="80" rx="16" />
+          <rect x="620" y="40" width="170" height="80" rx="16" />
+          <rect x="320" y="140" width="260" height="60" rx="16" />
+        </g>
+        <g font-size="14" font-weight="600" fill="#1f2937">
+          <text x="105" y="80" text-anchor="middle">Students</text>
+          <text x="105" y="100" text-anchor="middle">CLI Repo</text>
+          <text x="305" y="80" text-anchor="middle">Pull Request</text>
+          <text x="305" y="100" text-anchor="middle">+ Concept File</text>
+          <text x="505" y="80" text-anchor="middle">GitHub Actions</text>
+          <text x="505" y="100" text-anchor="middle">tests + bots</text>
+          <text x="705" y="80" text-anchor="middle">Cloudflare Worker</text>
+          <text x="705" y="100" text-anchor="middle">roster issue</text>
+          <text x="450" y="175" text-anchor="middle">Gradeboard &amp; Docs (GitHub Pages)</text>
+        </g>
+        <g stroke="#94a3b8" stroke-width="3" marker-end="url(#arrowhead)">
+          <line x1="180" y1="80" x2="220" y2="80" />
+          <line x1="390" y1="80" x2="420" y2="80" />
+          <line x1="590" y1="80" x2="620" y2="80" />
+          <line x1="505" y1="120" x2="505" y2="140" />
+          <line x1="705" y1="120" x2="600" y2="170" />
+        </g>
+      </svg>
     </div>
 
     <h2>Tech stack at a glance</h2>
