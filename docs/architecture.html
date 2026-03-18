@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>System Flow · TPP Py4E</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fafafa; color: #1f2937; margin: 0; }
+    header { padding: 1.5rem; border-bottom: 1px solid #e5e7eb; background: #fff; }
+    header a { text-decoration: none; color: #1f2937; font-weight: 600; }
+    main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 3.5rem; }
+    h1 { font-family: 'Playfair Display', serif; font-size: 2.75rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.8rem; margin-top: 2.5rem; }
+    p { color: #475569; line-height: 1.7; }
+    .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.25rem; }
+    .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 1rem; padding: 1.25rem; box-shadow: 0 15px 35px rgba(15,23,42,0.08); }
+    .card h3 { margin-top: 0; font-size: 1.1rem; }
+    .flowchart { margin-top: 2rem; background: #fff; border: 1px dashed #d1d5db; border-radius: 1rem; padding: 1.5rem; }
+    .flowchart ol { list-style: none; padding: 0; margin: 0; }
+    .flowchart li { margin-bottom: 0.8rem; position: relative; padding-left: 2rem; }
+    .flowchart li::before { content: '→'; position: absolute; left: 0; color: #f97316; }
+    .tech-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .tech-stack span { display: block; border: 1px solid #e5e7eb; border-radius: 999px; padding: 0.6rem 1rem; text-align: center; background: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="./index.html">← Back to Gradeboard</a>
+  </header>
+  <main>
+    <h1>System Flow & Technology Stack</h1>
+    <p>Taglish Py4E uses a lightweight but auditable pipeline: students code locally, GitHub Actions handles grading + reporting, and a Cloudflare Worker keeps roster forms inside the site. Below is the bird's-eye view.</p>
+
+    <div class="flowchart">
+      <ol>
+        <li><strong>Students</strong> clone the template repo, code per module, and open a PR with concept answers + walkthrough.</li>
+        <li><strong>Module Grade workflow</strong> runs pytest + concept checks → updates <code>grades/latest.json</code> and the Gradeboard.</li>
+        <li><strong>Concept question bot</strong> comments on each PR with random theory prompts to be answered inline.</li>
+        <li><strong>Cloudflare Worker</strong> handles roster enrollment forms, creates GitHub issues, and hands them off to the Gradeboard action.</li>
+        <li><strong>GitHub Pages</strong> serves the Gradeboard + docs so teachers see live progress.</li>
+      </ol>
+    </div>
+
+    <h2>Core components</h2>
+    <div class="flow-grid">
+      <div class="card">
+        <h3>Student repo (GitHub)</h3>
+        <p>CLI case study + modules, concept prompts, recordings folder. Students push PRs per module.</p>
+      </div>
+      <div class="card">
+        <h3>GitHub Actions</h3>
+        <p>Module grading, concept validation, random question bot, oral-check reminders, roster gradeboard sync.</p>
+      </div>
+      <div class="card">
+        <h3>Cloudflare Worker</h3>
+        <p>Receives roster form submissions from the site, creates GitHub issues securely (token never hits the browser).</p>
+      </div>
+      <div class="card">
+        <h3>GitHub Pages</h3>
+        <p>Hosts the public Gradeboard, architecture doc, and proposal roadmap so stakeholders see progress.</p>
+      </div>
+    </div>
+
+    <h2>Tech stack at a glance</h2>
+    <div class="tech-stack">
+      <span>Python 3.11 + pytest</span>
+      <span>GitHub Actions &amp; Pages</span>
+      <span>Cloudflare Workers (API bridge)</span>
+      <span>GitHub Issues + PR reviews</span>
+      <span>Random question bot (JS)</span>
+      <span>CSV/JSON grade exports</span>
+    </div>
+  </main>
+</body>
+</html>
