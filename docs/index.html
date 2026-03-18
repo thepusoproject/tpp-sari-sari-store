@@ -2,259 +2,236 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>TPP Py4E · Taglish Track</title>
+  <title>The Puso Project · Taglish Py4E</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
   <style>
     :root {
+      --cream: #fffaf3;
+      --sunset: #f97316;
+      --sunset-dark: #ea580c;
+      --charcoal: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
       color-scheme: light dark;
-      --accent: #f97316;
-      --accent-dark: #ea580c;
-      --bg: #fdfcf9;
-      --text: #1f2937;
-      --muted: #6b7280;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--cream);
+      color: var(--charcoal);
       line-height: 1.6;
     }
-    header {
-      background: linear-gradient(120deg, #fff7ed, #ffe4d6);
-      padding: 2.5rem 1.5rem 3.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    nav {
+    .site-header {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-    nav a {
-      text-decoration: none;
-      font-weight: 600;
-      color: var(--text);
-    }
-    nav a:hover { color: var(--accent-dark); }
-    .hero {
-      max-width: 960px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      margin-bottom: 1rem;
-    }
-    .hero p { margin-bottom: 1.5rem; color: var(--muted); }
-    .cta-group {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-    .btn {
-      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 0.9rem 1.6rem;
-      border-radius: 999px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: transform 0.15s ease;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-    .btn-primary:hover { background: var(--accent-dark); }
-    .btn-outline {
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
-    .btn-outline:hover {
+      justify-content: space-between;
+      padding: 1.5rem 1.75rem;
+      border-bottom: 1px solid var(--border);
       background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    main { padding: 3rem 1.5rem 4rem; }
-    section { margin: 0 auto 3.5rem; max-width: 1000px; }
-    section h2 { font-size: 2rem; margin-bottom: 0.75rem; }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .brand .eyebrow { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.08em; color: var(--sunset-dark); }
+    .brand .title { font-size: 1.1rem; font-weight: 600; }
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+    nav a:hover { color: var(--sunset-dark); }
+    main { padding: 3rem 1.5rem 4rem; max-width: 1100px; margin: 0 auto; }
+    section { margin-bottom: 4rem; }
+    .hero {
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.08);
+    }
+    .hero .kicker { text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.85rem; color: var(--sunset-dark); margin-bottom: 0.75rem; }
+    .hero h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); margin: 0 0 1rem; }
+    .hero p { max-width: 720px; color: var(--muted); }
+    .feature-list { list-style: none; padding: 0; margin: 1.5rem 0 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; }
+    .feature-list li { background: var(--cream); padding: 0.9rem 1rem; border-radius: 1rem; font-weight: 500; }
+    .cta-group { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.9rem 1.5rem; border-radius: 999px; font-weight: 600; text-decoration: none; transition: transform 0.15s ease; }
+    .btn-primary { background: var(--sunset); color: #fff; }
+    .btn-primary:hover { background: var(--sunset-dark); }
+    .btn-outline { border: 2px solid var(--sunset); color: var(--sunset-dark); }
+    h2 { font-size: 2rem; margin-bottom: 0.75rem; }
     .section-lede { color: var(--muted); margin-bottom: 1.5rem; }
-    .enroll-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: start; }
-    .form-field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+    .card {
+      background: #fff;
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+    }
+    .card h3 { margin-top: 0; }
+    .module-meta { display: inline-flex; gap: 0.35rem; font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; }
+    .steps { list-style: decimal inside; padding: 0; margin: 0; }
+    .steps li { margin-bottom: 0.6rem; }
+    .enroll-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .form-field { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; }
+    .form-field label { font-weight: 600; }
     .form-field input, .form-field textarea {
       padding: 0.75rem 0.9rem;
-      border-radius: 0.75rem;
-      border: 1px solid #e2e8f0;
+      border-radius: 0.9rem;
+      border: 1px solid var(--border);
       font-size: 1rem;
       font-family: inherit;
     }
-    .btn-full { width: 100%; justify-content: center; }
-    .form-status { margin-top: 0.75rem; color: var(--muted); }
-    .pillars {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-    .error { color: #b91c1c; margin-top: 0.75rem; }
-    .card {
-      background: #fff;
-      border-radius: 1rem;
-      padding: 1.5rem;
-      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
-    }
-    .card h3 { margin-top: 0; }
-    .steps { list-style: decimal inside; padding: 0; margin: 1rem 0; }
-    .steps li { margin-bottom: 0.5rem; }
+    .btn-full { width: 100%; }
+    .form-status { margin-top: 0.75rem; color: var(--muted); min-height: 1.5rem; }
     #gradeboard table {
       border-collapse: collapse;
       width: 100%;
-      margin-top: 1.5rem;
       background: #fff;
-      border-radius: 0.75rem;
+      border-radius: 1rem;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
     }
-    .table-wrapper { overflow-x: auto; }
-    #gradeboard th, #gradeboard td {
-      border-bottom: 1px solid #eef2ff;
-      padding: 0.75rem 1rem;
-      text-align: left;
-    }
-    #gradeboard th { background: #f8fafc; font-weight: 600; }
+    #gradeboard th, #gradeboard td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); text-align: left; }
+    #gradeboard th { background: var(--cream); }
     #gradeboard tr:last-child td { border-bottom: none; }
     #gradeboard input[type="search"] {
-      padding: 0.65rem 0.9rem;
+      padding: 0.8rem 1rem;
       width: 100%;
       max-width: 320px;
-      border-radius: 0.75rem;
-      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      border: 1px solid var(--border);
     }
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem 1.5rem 3rem;
-      color: var(--muted);
-      background: #fff7ed;
-    }
+    .table-wrapper { overflow-x: auto; }
+    .error { color: #b91c1c; margin-top: 0.75rem; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    footer { text-align: center; padding: 2.5rem 1.5rem; color: var(--muted); }
     @media (prefers-color-scheme: dark) {
       body { background: #0f172a; color: #f8fafc; }
-      header { background: linear-gradient(120deg, #1f2937, #0f172a); }
-      .card, #gradeboard table { background: #1e293b; box-shadow: none; }
+      .site-header, .hero, .card, #gradeboard table { background: #1e293b; box-shadow: none; }
+      nav a, .brand .title { color: #f8fafc; }
+      .feature-list li { background: #13213b; }
+      .form-field input, .form-field textarea, #gradeboard input[type="search"] { background: #0f172a; color: #f8fafc; border-color: #334155; }
       #gradeboard th { background: #0f172a; }
-      nav a { color: #f8fafc; }
-      .section-lede, .hero p, footer { color: #cbd5f5; }
-      #gradeboard input[type="search"] {
-        background: #0f172a;
-        color: #f8fafc;
-        border-color: #334155;
-      }
-      .form-field input, .form-field textarea {
-        background: #0f172a;
-        color: #f8fafc;
-        border-color: #334155;
-      }
     }
   </style>
 </head>
 <body>
-  <header id="home">
+  <header class="site-header">
+    <div class="brand">
+      <span class="eyebrow">The Puso Project</span>
+      <span class="title">Taglish Py4E Track</span>
+    </div>
     <nav>
       <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#experience">Learning Path</a>
+      <a href="#modules">Modules</a>
       <a href="#enroll">Enroll</a>
       <a href="#gradeboard">Gradeboard</a>
       <a href="#contact">Contact</a>
     </nav>
-    <div class="hero">
-      <h1>TPP Py4E Taglish Track</h1>
-      <p>Python for Everybody, rebuilt for Filipino learners. Self-paced modules, Taglish storytelling, GitHub-native workflows, and automated grading that keeps you honest.</p>
-      <div class="cta-group">
-        <a class="btn btn-primary" href="#enroll">Start the enrollment</a>
-        <a class="btn btn-outline" href="#gradeboard">View the live Gradeboard</a>
-      </div>
-    </div>
   </header>
 
   <main>
-    <section id="about">
-      <h2>Education 5.0 alignment</h2>
-      <p class="section-lede">We designed the Taglish Py4E experience to match Education 5.0’s human-first, tech-enabled principles.</p>
-      <div class="pillars">
+    <section class="hero" id="home">
+      <p class="kicker">Para sa Pilipino</p>
+      <h1>Skills na may impact.</h1>
+      <p>Ang Taglish Py4E ay micro-learning na naka-angkla sa tunay na developer workflow: GitHub branches, pull requests, automated grading, at mentoryo mula sa komunidad. Perfect para sa mga gustong mag-level up habang nagtatrabaho o nag-aaral.</p>
+      <ul class="feature-list">
+        <li>Taglish explainers + Filipino context</li>
+        <li>Real-time GitHub Actions feedback</li>
+        <li>Mastery-based unlocks (≥80%)</li>
+        <li>Community-driven coaching</li>
+      </ul>
+      <div class="cta-group">
+        <a class="btn btn-primary" href="#enroll">Mag-enroll ngayon</a>
+        <a class="btn btn-outline" href="#gradeboard">Silipin ang Gradeboard</a>
+      </div>
+    </section>
+
+    <section id="modules">
+      <h2>Ano’ng meron sa track?</h2>
+      <p class="section-lede">Isang evolving case study: ang TPP Sari-Sari Store CLI. Bawat module ay micro-upgrade sa tunay na store ops.</p>
+      <div class="cards">
         <article class="card">
-          <h3>Learner agency & inclusivity</h3>
-          <p>Taglish materials + mastery gating (≥80%) let students own their pace and language context.</p>
+          <h3>M01 · I/O at Variables</h3>
+          <p>Unang buhos: welcome screen, basic inventory input, at pag-print ng resibo sa Taglish prompts.</p>
+          <div class="module-meta">
+            <span>🕑 2–3 hrs</span>
+            <span>✨ Mastery gate: 80%</span>
+          </div>
         </article>
         <article class="card">
-          <h3>Authentic feedback loops</h3>
-          <p>GitHub Actions + pytest fire on every PR/push, no more waiting days for results.</p>
+          <h3>M02 · Conditionals</h3>
+          <p>Promo logic, senior citizen discount, at anti-palpak validation gamit ang <code>if/elif/else</code>.</p>
+          <div class="module-meta">
+            <span>🕑 3 hrs</span>
+            <span>📦 Inventory rules</span>
+          </div>
         </article>
         <article class="card">
-          <h3>Industry-grade workflows</h3>
-          <p>Branches, PRs, collaborators, CI checks—the classroom mirrors the real dev floor.</p>
+          <h3>M03 · Functions</h3>
+          <p>Refactor para hindi spaghetti: helper functions, docstrings, at mas malinaw na flow.</p>
+          <div class="module-meta">
+            <span>🕑 3–4 hrs</span>
+            <span>🧠 Code health</span>
+          </div>
         </article>
         <article class="card">
-          <h3>Data transparency</h3>
-          <p>Each repo writes <code>grades/latest.json</code>; the Gradeboard aggregates insight for teachers and students.</p>
-        </article>
-        <article class="card">
-          <h3>Human + AI collaboration</h3>
-          <p>Automation handles validation so mentors can coach, storytell, and unblock humans.</p>
-        </article>
-        <article class="card">
-          <h3>Iterative curriculum</h3>
-          <p>Students pull template updates safely, so we can ship fixes or new modules anytime.</p>
+          <h3>M04 · Loops + Files</h3>
+          <p>Hands-on sa stock counts, CSV logs, at repeatable tasks—parang tunay na tindahan.</p>
+          <div class="module-meta">
+            <span>🕑 4 hrs</span>
+            <span>🗂 Data hygiene</span>
+          </div>
         </article>
       </div>
     </section>
 
-    <section id="experience">
-      <h2>Learning path snapshot</h2>
-      <p class="section-lede">Mastery-based progression with one evolving case study: the TPP Sari-Sari Store CLI.</p>
-      <div class="pillars">
+    <section id="about">
+      <h2>Education 5.0 feels</h2>
+      <p class="section-lede">Human-first pero data-informed. Taglish storytelling + industry workflows para sa mga Pinoy dev hopefuls.</p>
+      <div class="cards">
         <article class="card">
-          <h3>01 · Clone the template</h3>
-          <p>Use the <strong>TPP Sari-Sari Store</strong> template and name it <code>tpp-sari-sari-store-&lt;yourname&gt;</code>. Keep it public so CI + reviews work.</p>
+          <h3>Agency & Inclusivity</h3>
+          <p>Taglish materials at sariling bilis. Mas empowered ang estudyante sa pacing at privacy.</p>
         </article>
         <article class="card">
-          <h3>02 · Build + run locally</h3>
-          <p>Create a virtualenv, install requirements, and run <code>python main.py</code>. Tests live under <code>tests/</code> for each module.</p>
+          <h3>Feedback na real-time</h3>
+          <p>GitHub Actions + pytest sa bawat PR/push—alam mo agad kung pasado.</p>
         </article>
         <article class="card">
-          <h3>03 · Submit modules via PR</h3>
-          <p>One branch per module. Push, open a PR, wait for green checks, then request review. Unlock the next module at ≥80%.</p>
+          <h3>Data transparency</h3>
+          <p>Lahat ng scores nasa <code>grades/latest.json</code> at live na Gradeboard para sa coaching.</p>
+        </article>
+        <article class="card">
+          <h3>Human + AI collab</h3>
+          <p>Automation sa checks, tao sa mentorship. Sakto sa Education 5.0 playbook.</p>
         </article>
       </div>
     </section>
 
     <section id="enroll">
-      <h2>Enroll in the roster</h2>
-      <p class="section-lede">Fill out the mini form—we’ll open a pre-filled GitHub issue so you just review and submit.</p>
+      <h2>Enroll sa roster</h2>
+      <p class="section-lede">Dalawang field lang. We’ll open a pre-filled GitHub issue—i-review mo na lang bago i-submit.</p>
       <div class="enroll-grid">
         <article class="card">
-          <h3>How it works</h3>
+          <h3>Paano gumagana</h3>
           <ol class="steps">
-            <li>Create your repo from the template (public) and invite <code>thepusoproject</code> as collaborator.</li>
-            <li>Use the form to generate a roster issue. We pre-fill the title, label, and body for you.</li>
-            <li>Review the GitHub issue that opens in a new tab and click <strong>Submit new issue</strong>.</li>
-            <li>Give us a beat—the Gradeboard refreshes soon after we merge you into the roster.</li>
+            <li>Gumawa ng repo mula sa template at i-invite ang <code>thepusoproject</code>.</li>
+            <li>I-fill out ang form para mag-generate ng roster issue (auto title + label + body).</li>
+            <li>Bubukas ang GitHub sa bagong tab—click <strong>Submit new issue</strong>.</li>
+            <li>Hintayin ang roster merge; lalabas ka agad sa Gradeboard pag na-sync.</li>
           </ol>
-          <p>Need help? Ping us before filing so we can keep the roster tidy.</p>
         </article>
         <article class="card">
           <h3>Quick enrollment form</h3>
@@ -269,7 +246,7 @@
             </div>
             <div class="form-field">
               <label for="notes">Notes (optional)</label>
-              <textarea id="notes" name="notes" rows="3" placeholder="Timezone, blockers, anything we should know"></textarea>
+              <textarea id="notes" name="notes" rows="3" placeholder="Timezone, blockers, schedule, etc."></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-full">Generate roster issue</button>
             <p id="form-status" class="form-status" aria-live="polite"></p>
@@ -280,17 +257,17 @@
 
     <section id="gradeboard">
       <h2>Live Gradeboard</h2>
-      <p class="section-lede">Scores pull from every student repo’s <code>grades/latest.json</code>. Use search to find your entry.</p>
+      <p class="section-lede">Real-time view ng lahat ng repos. Lahat ng scores galing sa <code>grades/latest.json</code>.</p>
       <p id="updated">Loading…</p>
       <label>
         <span class="sr-only">Search</span>
-        <input id="search" type="search" placeholder="Search by name or handle" />
+        <input id="search" type="search" placeholder="Hanapin ang handle o pangalan" />
       </label>
       <div class="table-wrapper">
         <table id="grade-table" hidden>
           <thead>
             <tr>
-              <th>Student</th>
+              <th>Estudyante</th>
               <th>Module</th>
               <th>Score</th>
               <th>Updated</th>
@@ -304,25 +281,23 @@
     </section>
 
     <section id="contact">
-      <h2>Contact</h2>
-      <p class="section-lede">We’re small, scrappy, and reachable.</p>
-      <div class="pillars">
+      <h2>Kontakin kami</h2>
+      <p class="section-lede">DMs open, issues welcome.</p>
+      <div class="cards">
         <article class="card">
           <h3>GitHub</h3>
-          <p>Questions or blockers? Open an issue in the<br />
-            <a href="https://github.com/thepusoproject/tpp-sari-sari-store/issues" target="_blank" rel="noopener noreferrer">TPP Sari-Sari Store repo</a>.
-          </p>
+          <p>Kung may tanong o blockers, mag-open ng issue sa <a href="https://github.com/thepusoproject/tpp-sari-sari-store/issues" target="_blank" rel="noopener noreferrer">TPP Sari-Sari Store repo</a>.</p>
         </article>
         <article class="card">
           <h3>Telegram</h3>
-          <p>DM <a href="https://t.me/The_Puso_Project" target="_blank" rel="noopener noreferrer">@The_Puso_Project</a> for quick check-ins.</p>
+          <p>Message <a href="https://t.me/The_Puso_Project" target="_blank" rel="noopener noreferrer">@The_Puso_Project</a> para sa mabilis na check-in.</p>
         </article>
       </div>
     </section>
   </main>
 
   <footer>
-    © <span id="year"></span> The Puso Project · Built with GitHub Pages and automated grading love.
+    © <span id="year"></span> The Puso Project · Built on GitHub Pages · Taglish Py4E Track
   </footer>
 
   <script>
@@ -393,7 +368,6 @@
         document.getElementById('error').textContent = `Failed to load gradeboard: ${err}`;
       });
 
-
     const rosterForm = document.getElementById('roster-form');
     if (rosterForm) {
       const statusEl = document.getElementById('form-status');
@@ -404,7 +378,7 @@
         const repo = (formData.get('repo') || '').trim();
         const notes = (formData.get('notes') || '').trim();
         if (!handle || !repo) {
-          statusEl.textContent = 'Please fill out both your GitHub handle and repo.';
+          statusEl.textContent = 'Pakicomplete ang handle at repo.';
           return;
         }
         const lines = [
@@ -420,7 +394,7 @@
         const labels = encodeURIComponent('roster');
         const url = `https://github.com/thepusoproject/tpp-sari-sari-store/issues/new?title=${title}&body=${body}&labels=${labels}`;
         window.open(url, '_blank');
-        statusEl.textContent = 'Opened GitHub in a new tab. Review and submit the issue to finish enrollment.';
+        statusEl.textContent = 'Binuksan namin ang GitHub sa bagong tab. I-review at i-submit ang issue para makapasok sa roster.';
         rosterForm.reset();
       });
     }
