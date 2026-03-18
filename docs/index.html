@@ -2,55 +2,296 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>TPP Py4E Gradeboard</title>
+  <title>TPP Py4E · Taglish Track</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; margin: 2rem; }
-    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
-    th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
-    th { background: #f4f4f4; }
-    .error { color: #b00020; }
+    :root {
+      color-scheme: light dark;
+      --accent: #f97316;
+      --accent-dark: #ea580c;
+      --bg: #fdfcf9;
+      --text: #1f2937;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(120deg, #fff7ed, #ffe4d6);
+      padding: 2.5rem 1.5rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    nav a {
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--text);
+    }
+    nav a:hover { color: var(--accent-dark); }
+    .hero {
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+    }
+    .hero p { margin-bottom: 1.5rem; color: var(--muted); }
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.9rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-outline {
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+    .btn-outline:hover {
+      background: #fff;
+    }
+    main { padding: 3rem 1.5rem 4rem; }
+    section { margin: 0 auto 3.5rem; max-width: 1000px; }
+    section h2 { font-size: 2rem; margin-bottom: 0.75rem; }
+    .section-lede { color: var(--muted); margin-bottom: 1.5rem; }
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .error { color: #b91c1c; margin-top: 0.75rem; }
+    .card {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+    }
+    .card h3 { margin-top: 0; }
+    .steps { list-style: decimal inside; padding: 0; margin: 1rem 0; }
+    .steps li { margin-bottom: 0.5rem; }
+    #gradeboard table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 1.5rem;
+      background: #fff;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    }
+    .table-wrapper { overflow-x: auto; }
+    #gradeboard th, #gradeboard td {
+      border-bottom: 1px solid #eef2ff;
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+    #gradeboard th { background: #f8fafc; font-weight: 600; }
+    #gradeboard tr:last-child td { border-bottom: none; }
+    #gradeboard input[type="search"] {
+      padding: 0.65rem 0.9rem;
+      width: 100%;
+      max-width: 320px;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e8f0;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem 3rem;
+      color: var(--muted);
+      background: #fff7ed;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #0f172a; color: #f8fafc; }
+      header { background: linear-gradient(120deg, #1f2937, #0f172a); }
+      .card, #gradeboard table { background: #1e293b; box-shadow: none; }
+      #gradeboard th { background: #0f172a; }
+      nav a { color: #f8fafc; }
+      .section-lede, .hero p, footer { color: #cbd5f5; }
+      #gradeboard input[type="search"] {
+        background: #0f172a;
+        color: #f8fafc;
+        border-color: #334155;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>TPP Py4E Gradeboard</h1>
-  <section>
-    <h2>Need to enroll?</h2>
-    <p>
-      If you haven't joined the roster yet, enroll by opening the
-      <a href="https://github.com/thepusoproject/tpp-sari-sari-store/issues/new?template=roster-signup.yml" target="_blank" rel="noopener noreferrer">
-        roster signup issue
-      </a>
-      on GitHub. Fill in your GitHub handle and the URL of your
-      <code>tpp-sari-sari-store-&lt;yourname&gt;</code> repository so the Gradeboard can pull your scores automatically.
-    </p>
-    <ol>
-      <li>Use the course template to create your repo (public).</li>
-      <li>Click the roster signup link above.</li>
-      <li>Submit your handle, repo (<code>owner/repo</code>), and any notes.</li>
-    </ol>
-    <p>
-      Once your issue is submitted, the instructor will add you to the roster and your grades will appear below after the next automated run.
-    </p>
-  </section>
-  <p id="updated">Loading…</p>
-  <label>
-    Search: <input id="search" type="search" placeholder="Name or handle" />
-  </label>
-  <table id="grade-table" hidden>
-    <thead>
-      <tr>
-        <th>Student</th>
-        <th>Module</th>
-        <th>Score</th>
-        <th>Updated</th>
-        <th>Last Push</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <p id="error" class="error"></p>
+  <header id="home">
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#experience">Learning Path</a>
+      <a href="#enroll">Enroll</a>
+      <a href="#gradeboard">Gradeboard</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="hero">
+      <h1>TPP Py4E Taglish Track</h1>
+      <p>Python for Everybody, rebuilt for Filipino learners. Self-paced modules, Taglish storytelling, GitHub-native workflows, and automated grading that keeps you honest.</p>
+      <div class="cta-group">
+        <a class="btn btn-primary" href="#enroll">Start the enrollment</a>
+        <a class="btn btn-outline" href="#gradeboard">View the live Gradeboard</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>Education 5.0 alignment</h2>
+      <p class="section-lede">We designed the Taglish Py4E experience to match Education 5.0’s human-first, tech-enabled principles.</p>
+      <div class="pillars">
+        <article class="card">
+          <h3>Learner agency & inclusivity</h3>
+          <p>Taglish materials + mastery gating (≥80%) let students own their pace and language context.</p>
+        </article>
+        <article class="card">
+          <h3>Authentic feedback loops</h3>
+          <p>GitHub Actions + pytest fire on every PR/push, no more waiting days for results.</p>
+        </article>
+        <article class="card">
+          <h3>Industry-grade workflows</h3>
+          <p>Branches, PRs, collaborators, CI checks—the classroom mirrors the real dev floor.</p>
+        </article>
+        <article class="card">
+          <h3>Data transparency</h3>
+          <p>Each repo writes <code>grades/latest.json</code>; the Gradeboard aggregates insight for teachers and students.</p>
+        </article>
+        <article class="card">
+          <h3>Human + AI collaboration</h3>
+          <p>Automation handles validation so mentors can coach, storytell, and unblock humans.</p>
+        </article>
+        <article class="card">
+          <h3>Iterative curriculum</h3>
+          <p>Students pull template updates safely, so we can ship fixes or new modules anytime.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Learning path snapshot</h2>
+      <p class="section-lede">Mastery-based progression with one evolving case study: the TPP Sari-Sari Store CLI.</p>
+      <div class="pillars">
+        <article class="card">
+          <h3>01 · Clone the template</h3>
+          <p>Use the <strong>TPP Sari-Sari Store</strong> template and name it <code>tpp-sari-sari-store-&lt;yourname&gt;</code>. Keep it public so CI + reviews work.</p>
+        </article>
+        <article class="card">
+          <h3>02 · Build + run locally</h3>
+          <p>Create a virtualenv, install requirements, and run <code>python main.py</code>. Tests live under <code>tests/</code> for each module.</p>
+        </article>
+        <article class="card">
+          <h3>03 · Submit modules via PR</h3>
+          <p>One branch per module. Push, open a PR, wait for green checks, then request review. Unlock the next module at ≥80%.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="enroll">
+      <h2>Enroll in the roster</h2>
+      <p class="section-lede">One issue and you’re on the radar. After that, the Gradeboard tracks you automatically.</p>
+      <article class="card">
+        <ol class="steps">
+          <li>Create your repo from the template (public) and invite <code>thepusoproject</code> as collaborator.</li>
+          <li>
+            Open the
+            <a href="https://github.com/thepusoproject/tpp-sari-sari-store/issues/new?template=roster-signup.yml" target="_blank" rel="noopener noreferrer">roster signup issue</a>
+            and submit your GitHub handle plus <code>owner/repo</code>.
+          </li>
+          <li>Wait for the roster update. The Gradeboard refreshes automatically on the next scheduled run.</li>
+        </ol>
+        <p>Need help? Ping us before filing the issue so we can keep the roster clean.</p>
+      </article>
+    </section>
+
+    <section id="gradeboard">
+      <h2>Live Gradeboard</h2>
+      <p class="section-lede">Scores pull from every student repo’s <code>grades/latest.json</code>. Use search to find your entry.</p>
+      <p id="updated">Loading…</p>
+      <label>
+        <span class="sr-only">Search</span>
+        <input id="search" type="search" placeholder="Search by name or handle" />
+      </label>
+      <div class="table-wrapper">
+        <table id="grade-table" hidden>
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Module</th>
+              <th>Score</th>
+              <th>Updated</th>
+              <th>Last Push</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p id="error" class="error"></p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p class="section-lede">We’re small, scrappy, and reachable.</p>
+      <div class="pillars">
+        <article class="card">
+          <h3>GitHub</h3>
+          <p>Questions or blockers? Open an issue in the<br />
+            <a href="https://github.com/thepusoproject/tpp-sari-sari-store/issues" target="_blank" rel="noopener noreferrer">TPP Sari-Sari Store repo</a>.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Telegram</h3>
+          <p>DM <a href="https://t.me/The_Puso_Project" target="_blank" rel="noopener noreferrer">@The_Puso_Project</a> for quick check-ins.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> The Puso Project · Built with GitHub Pages and automated grading love.
+  </footer>
+
   <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
     const tbody = document.querySelector('#grade-table tbody');
     let students = [];
 
@@ -109,8 +350,7 @@
     fetch('grades.json', {cache: 'no-store'})
       .then((resp) => resp.json())
       .then((data) => {
-        const updated = document.getElementById('updated');
-        updated.textContent = `Last updated: ${new Date(data.generated_at).toLocaleString()}`;
+        document.getElementById('updated').textContent = `Last updated: ${new Date(data.generated_at).toLocaleString()}`;
         students = data.students || [];
         render('');
       })
