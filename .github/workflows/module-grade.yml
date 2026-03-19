@@ -13,6 +13,8 @@ permissions:
 jobs:
   grade:
     runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,14 +30,29 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run module tests
+        id: tests
+        continue-on-error: true
         run: pytest --maxfail=1 --disable-warnings --json-report --json-report-file=grade_report.json
+
+      - name: Generate receipt mentor hint
+        if: env.OPENAI_API_KEY != ''
+        env:
+          AI_RECEIPT_HINTS: 1
+        run: python scripts/ai_receipt_hint.py grade_report.json --output ai_hint.txt
 
       - name: Verify concept reflections
         if: github.repository_owner != 'thepusoproject'
-        run: python scripts/check_concepts.py
+        env:
+          AI_CONCEPT_TRIAGE: 1
+        run: python scripts/check_concepts.py --ai-report ai_concepts.md
 
       - name: Compute grade artifacts
         run: python scripts/compute_grade.py grade_report.json --json-output grades/latest.json --markdown-output GRADEBOOK.md
+
+      - name: Generate adaptive badge summary
+        env:
+          AI_BADGES: 1
+        run: python scripts/ai_badges.py
 
       - name: Upload grading artifacts
         uses: actions/upload-artifact@v4
@@ -45,6 +62,10 @@ jobs:
             grade_report.json
             grades/latest.json
             GRADEBOOK.md
+            ai_concepts.md
+            ai_hint.txt
+            badges/latest.json
+          if-no-files-found: ignore
 
       - name: Commit gradebook on main
         if: github.event_name == 'push'
@@ -52,3 +73,7 @@ jobs:
         with:
           commit_message: 'chore: update gradebook'
           file_pattern: 'GRADEBOOK.md grades/latest.json'
+
+      - name: Fail if tests failed
+        if: steps.tests.outcome == 'failure'
+        run: exit 1

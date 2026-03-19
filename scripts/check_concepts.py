@@ -67,10 +67,13 @@ def main() -> None:
         if not path.exists():
             continue
         content = path.read_text(encoding="utf-8")
-        if PLACEHOLDER in content:
-            errors.append(f"{label}: Palitan lahat ng placeholder na `{PLACEHOLDER}` sa {path}.")
-            continue
         lines = [line for line in content.splitlines() if line.startswith("**Sagot ko:**")]
+        placeholder_hits = [idx for idx, line in enumerate(lines, start=1) if PLACEHOLDER in line]
+        if placeholder_hits:
+            errors.append(
+                f"{label}: Palitan lahat ng placeholder na `{PLACEHOLDER}` sa {path} (sagot #{placeholder_hits[0]})."
+            )
+            continue
         if not lines:
             errors.append(f"{label}: Walang nakitang linya na nagsisimula sa `**Sagot ko:**` sa {path}.")
             continue
