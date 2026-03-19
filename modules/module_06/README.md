@@ -13,8 +13,9 @@
 - Error handling kapag nawawala ang file o corrupt ang data.
 
 ## Acceptance idea (when unlocked)
-- Tests under `tests/module_06/test_persistence.py` will create temp dirs; expect functions `save_sales(entries, path)` and `load_state(path)`.
-- CLI must print a success message showing the save location.
+- `python -m tests.module_06.test_persistence` targets `save_sales()` and `load_state()` inside `tpp/persistence.py`.
+- Tests use temp folders, so functions must accept `pathlib.Path` objects and return the final path.
+- CLI can wrap these helpers, but the helpers themselves must be pure/side-effect free except for filesystem writes.
 
 ## Stretch ideas
 - Auto-archive old logs after X days.

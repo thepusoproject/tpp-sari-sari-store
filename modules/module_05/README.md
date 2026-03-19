@@ -13,8 +13,8 @@
 - Simple sanitizers (`slugify_item(name)`, `format_price(amount)`).
 
 ## Acceptance idea (when unlocked)
-- `python -m tests.module_05.test_menu` will expect helpers inside `menu.py` + `validators.py`.
-- Menu preview must be 100% deterministic (use fixtures for sample inventory).
+- `python -m tests.module_05.test_strings` calls `sanitize_sku()` and `format_menu()` from `tpp/strings.py`.
+- Menu preview must be deterministic: test fixtures expect `1) <name> — ₱xx.xx (SKU: XXX)` formatting.
 
 ## Stretch ideas
 - Auto-suggest similar item names kapag may typo.
