@@ -279,10 +279,11 @@
         <article class="card">
           <h3>Paano gumagana</h3>
           <ol class="steps">
-            <li>I-fill out ang Quick enrollment form sa kanan (GitHub handle + repo). Kung wala ka pang repo, gamitin ang template muna tapos i-invite ang <code>thepusoproject</code>.</li>
-            <li>Pag-submit mo, auto naming binubuo at ipinapasa ang GitHub roster issue sa background (may fallback na GitHub tab kung hindi pa naka-configure ang automation).</li>
-            <li>Makakakuha ka ng confirmation at link kung gusto mong silipin ang issue sa GitHub.</li>
-            <li>Hintayin ang roster merge—lalabas ka sa Gradeboard pagkatapos ng sync.</li>
+            <li><strong>Gumawa ng repo:</strong> Click “Use this template” (o mag-fork) para magkaroon ng sariling repo. I-invite ang <code>thepusoproject</code> bilang collaborator.</li>
+            <li><strong>Mag-fill out ng form:</strong> Ilagay lang ang GitHub handle at repo link. Wala pang code? ok lang—kailangan lang namin ng URL para ma-track ang grades.</li>
+            <li><strong>Hintayin ang confirmation:</strong> Cloudflare Worker ang magfa-file ng roster issue. Kung may fallback, bubukas ang GitHub tab para i-confirm mo manually.</li>
+            <li><strong>I-clone at i-setup ang laptop:</strong> Pag may confirmation na, <code>git clone</code>, gumawa ng virtualenv (<code>python -m venv .venv</code>), at <code>pip install -r requirements.txt</code> bago mag-code.</li>
+            <li><strong>Simulan ang module:</strong> Bawat module = isang PR. Sagutin ang concept prompts, ayusin ang tests, at merge lang pag green ang checks.</li>
           </ol>
         </article>
         <article class="card">
