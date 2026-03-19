@@ -37,7 +37,7 @@ Need to showcase “smart” feedback? Export your OpenAI key (or set it as a re
 
 If the env var is unset, each script stays deterministic (no API call) so you can keep costs at zero until you actually want the AI narrative.
 
-On GitHub Actions, set the repo secret `OPENAI_API_KEY` and the Module Grade workflow will automatically run the same triage/hint/badge scripts (all outputs get attached as workflow artifacts).
+On GitHub Actions, set the repo secret `OPENAI_API_KEY` and the Module Grade workflow (pull_request events only) will automatically run the same triage/hint/badge scripts—artifacts are attached to each run while pushes stay deterministic.
 
 
 ## Automated grading
