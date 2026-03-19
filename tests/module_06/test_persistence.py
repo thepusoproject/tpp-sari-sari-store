@@ -2,10 +2,10 @@ import json
 import os
 import pytest
 
-from tpp.persistence import load_state, save_sales
-
 if os.getenv("RUN_MODULE_06") != "1":
     pytest.skip("Set RUN_MODULE_06=1 to enable Module 06 tests.", allow_module_level=True)
+
+from tpp.persistence import load_state, save_sales
 
 
 def test_save_sales_writes_csv(tmp_path):

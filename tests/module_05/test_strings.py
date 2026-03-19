@@ -1,10 +1,10 @@
 import os
 import pytest
 
-from tpp.strings import format_menu, sanitize_sku
-
 if os.getenv("RUN_MODULE_05") != "1":
     pytest.skip("Set RUN_MODULE_05=1 to enable Module 05 tests.", allow_module_level=True)
+
+from tpp.strings import format_menu, sanitize_sku
 
 
 def test_sanitize_sku_trims_and_uppercases():
