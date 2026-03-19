@@ -26,6 +26,18 @@ Implement requirements module-by-module. Your instructor will grade via Pull Req
 - Tuwing magbubukas ka ng PR, isang bot ang magpo-post ng 2 random na tanong mula sa module na iyon. Sagutin ang thread bago mag-request ng review.
 - Lahat ito ay kasama sa iisang PR kasama ng code changes mo, kaya isang submission lang per module.
 
+## Optional AI helpers (M01–M02)
+Need to showcase “smart” feedback? Export your OpenAI key (or set it as a repo secret) and flip the feature flags below. Every prompt is capped to short Taglish sentences so token usage stays tiny.
+
+| Feature | How to run | Env flags | Output |
+| --- | --- | --- | --- |
+| Concept triage | `AI_CONCEPT_TRIAGE=1 python scripts/check_concepts.py --ai-report ai_concepts.md` | `OPENAI_API_KEY`, optional `AI_MODEL` | ≤40-word verdict per module (also printed to stdout). |
+| Receipt mentor hints | `python scripts/ai_receipt_hint.py grade_report.json --output ai_hint.txt` | `AI_RECEIPT_HINTS=1` to enable LLM fallback | One Taglish hint when pytest fails (uses heuristics before AI). |
+| Adaptive badge | `AI_BADGES=1 python scripts/ai_badges.py` | `AI_BADGES=1` to call the model | `badges/latest.json` with metrics + ≤30-word badge text. |
+
+If the env var is unset, each script stays deterministic (no API call) so you can keep costs at zero until you actually want the AI narrative.
+
+
 ## Automated grading
 Every push/merge to `main` runs the **Module Grade** GitHub Action:
 - Executes the module-specific pytest suite in `tests/`
