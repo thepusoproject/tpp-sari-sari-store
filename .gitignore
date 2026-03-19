@@ -1,1 +1,4 @@
 roster-worker/.wrangler/
+
+__pycache__/
+.pytest_cache/
