@@ -1,5 +1,9 @@
 [
   {
+    "handle": "engramar",
+    "repo": "engramar/tpp-sari-sari-store-engramar"
+  },
+  {
     "handle": "test",
     "repo": "owner/repo"
   }
