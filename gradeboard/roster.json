@@ -1,2 +1,6 @@
 [
+  {
+    "handle": "test",
+    "repo": "owner/repo"
+  }
 ]

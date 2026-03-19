@@ -1,4 +1,15 @@
 {
-  "generated_at": "2026-03-19T05:15:16.274748+00:00",
-  "students": []
+  "generated_at": "2026-03-19T05:32:25.292334+00:00",
+  "students": [
+    {
+      "handle": "test",
+      "displayName": "test",
+      "profileUrl": "https://github.com/test",
+      "repo": "owner/repo",
+      "status": "error",
+      "lastPush": null,
+      "moduleNumber": null,
+      "error": "HTTP 404"
+    }
+  ]
 }
