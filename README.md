@@ -37,7 +37,16 @@ Need to showcase “smart” feedback? Export your OpenAI key (or set it as a re
 
 If the env var is unset, each script stays deterministic (no API call) so you can keep costs at zero until you actually want the AI narrative.
 
-On GitHub Actions, set the repo secret `OPENAI_API_KEY` and the Module Grade workflow (pull_request events only) will automatically run the same triage/hint/badge scripts—artifacts are attached to each run while pushes stay deterministic.
+### Teacher feedback script
+Teachers can generate the `.md` advice during review (no student secrets needed):
+
+```bash
+OPENAI_API_KEY=sk-... python scripts/write_feedback.py 01
+```
+
+It reads `modules/module_01/CONCEPT.md`, produces Taglish feedback, and writes `modules/module_01/FEEDBACK.md` on the student's branch.
+
+On the main template repo, set the secret `OPENAI_API_KEY` and the Module Grade workflow (pull_request events only) will automatically run the same triage/hint/badge scripts—forks don't inherit the secret (teachers run the feedback script or re-run the workflow when needed).
 
 
 ## Automated grading

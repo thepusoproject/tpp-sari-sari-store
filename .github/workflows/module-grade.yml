@@ -35,7 +35,7 @@ jobs:
         run: pytest --maxfail=1 --disable-warnings --json-report --json-report-file=grade_report.json
 
       - name: Generate receipt mentor hint
-        if: github.event_name == 'pull_request' && env.OPENAI_API_KEY != '' && steps.tests.outcome == 'failure'
+        if: github.repository_owner == 'thepusoproject' && github.event_name == 'pull_request' && env.OPENAI_API_KEY != '' && steps.tests.outcome == 'failure'
         env:
           AI_RECEIPT_HINTS: 1
         run: python scripts/ai_receipt_hint.py grade_report.json --output ai_hint.txt
@@ -43,7 +43,7 @@ jobs:
       - name: Verify concept reflections
         if: github.event_name == 'pull_request' && github.repository_owner != 'thepusoproject'
         env:
-          AI_CONCEPT_TRIAGE: 1
+          AI_CONCEPT_TRIAGE: ${{ github.repository_owner == 'thepusoproject' && '1' || '0' }}
         run: python scripts/check_concepts.py --ai-report ai_concepts.md
 
       - name: Compute grade artifacts
@@ -52,7 +52,7 @@ jobs:
       - name: Generate adaptive badge summary
         if: github.event_name == 'pull_request'
         env:
-          AI_BADGES: 1
+          AI_BADGES: ${{ github.repository_owner == 'thepusoproject' && '1' || '0' }}
         run: python scripts/ai_badges.py
 
       - name: Upload grading artifacts
